@@ -1,40 +1,27 @@
-AmountOnKill: 10
-StartAmount: 20
-PublicDeathMessage: false
-DeathMessage: "&c%killer% &4hatt &c%spieler% &4get\xf6tet"
+#Dies ist die Standert Config
+AmountOnKill: 10 #Wie viel man durch das Töten von Spielern bekommnt
+StartAmount: 20 #Wie viel man am Anfang hat
+PublicDeathMessage: false #Ob man einen Globale Todes Nachricht haben möchte
+# %kill% -> von dem Killer der Name %spieler% -> von dem Getöteten Spieler der Name
+DeathMessage: "&c%killer% &4hatt &c%spieler% &4getötet" #Die Todes nachricht
+
+#Kits
+
 Kit:
-  Start:
-    DisplayName: '&eStart-Kit'
-    Cost: 1
-    Icon: LEATHER_BOOTS
-    Items:
-      '1':
-      - IRON_SWORD
-      - '&eStart-Schwert'
-      - '1'
-      - '0'
-      - '16'
-      - '1'
-      - '&eSchwert des Todes!'
-      '2':
-      - APPLE
-      - '&cApfel'
-      - '10'
-      - '0'
-      - '0'
-      - '0'
-      - '&cApfel Kuchen'
-      '3':
-      - DIAMOND
-      - '&cJumper'
-      - '1'
-      - '0'
-      - '0'
-      - '0'
-      - '&1Jumper'
-    ItemList:
-    - 1
-    - 2
-    - 3
-KitList:
-- Start
+  Start: # <-- Kit Namen
+    DisplayName: '&eStart-Kit' #<-- DisplayNamen // Wie das Kit im Kit Inventar oder im ShopInventar angezeit Wird
+    Cost: 1 #<-- Wie Viel das Kit Kostet
+    Icon: LEATHER_BOOTS # // Wie das Kit im Kit Inventar oder im ShopInventar angezeit Wird
+    Items: 
+      '1': #<-- Der Kit Name (Muss eine Zahl Sein)
+      - IRON_SWORD #<-- Das item muss in einem Kompatibelen Format sein
+      - '&eStart-Schwert' #<-- Der Name in einem Color Code
+      - '1' #<-- Der Betrag von dem Item
+      - '0' #<-- Die Meta daten
+      - '16' #<-- Die Enchantment ID
+      - '1' #<-- Das Enchantment LvL
+      - '&eSchwert des Todes!' #<-- Lore des Item
+    ItemList: #<-- Kit Liste, hier müssen alle oben eingetragenen Kits eingetragen werden
+    - 1 #<-- Kit '1'
+KitList: #<-- Hier Müssen alle Kits eingetragen werden die Erstellt worden sind
+- Start #<-- Kit: Start
