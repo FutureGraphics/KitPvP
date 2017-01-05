@@ -1,2 +1,2 @@
 # KitPvP
-This discripe how the configuration file in my Minecraft Plugin works
+Hier Werden Updtaes zu meinem Plugin folgen
