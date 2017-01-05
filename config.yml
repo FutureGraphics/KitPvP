@@ -1,0 +1,40 @@
+AmountOnKill: 10
+StartAmount: 20
+PublicDeathMessage: false
+DeathMessage: "&c%killer% &4hatt &c%spieler% &4get\xf6tet"
+Kit:
+  Start:
+    DisplayName: '&eStart-Kit'
+    Cost: 1
+    Icon: LEATHER_BOOTS
+    Items:
+      '1':
+      - IRON_SWORD
+      - '&eStart-Schwert'
+      - '1'
+      - '0'
+      - '16'
+      - '1'
+      - '&eSchwert des Todes!'
+      '2':
+      - APPLE
+      - '&cApfel'
+      - '10'
+      - '0'
+      - '0'
+      - '0'
+      - '&cApfel Kuchen'
+      '3':
+      - DIAMOND
+      - '&cJumper'
+      - '1'
+      - '0'
+      - '0'
+      - '0'
+      - '&1Jumper'
+    ItemList:
+    - 1
+    - 2
+    - 3
+KitList:
+- Start
