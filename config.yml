@@ -21,8 +21,7 @@ Kit:
       - '16' #<-- Die Enchantment ID
       - '1' #<-- Das Enchantment LvL
       - '&eSchwert des Todes!' #<-- Lore des Item
-    ItemList: #<-- Kit Liste, hier müssen alle oben eingetragenen Kits eingetragen werden
-    - 1 #<-- Kit '1'
+    ItemList: 1 #<-- Kit Liste, hier müssen alle oben eingetragenen Kits eingetragen werden
 KitList: #<-- Hier Müssen alle Kits eingetragen werden die Erstellt worden sind
 - Start #<-- Kit: Start
 
@@ -57,10 +56,7 @@ Kit:
       - '0'
       - '0'
       - '&1Jumper'
-    ItemList: #Alle eingetragenen Kits
-    - 1
-    - 2
-    - 3
+    ItemList: 3
 # Funktions Namen
 # Blitze Schleudern: &cHammer von Thor
 # Spieler in einem Radius von 5 Blöcken anzünden: &cFeuer
