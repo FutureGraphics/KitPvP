@@ -65,6 +65,11 @@ Kit:
 # Blitze Schleudern: &cHammer von Thor
 # Spieler in einem Radius von 5 Blöcken anzünden: &cFeuer
 # Jumper Funktion: &cJumper
+# Regeneration: &cRegeneration
+# Vergiften: &cVergiften
+# Slow: &cSlow
+# Unsichtbar: &cUnsichtbar
+# Teleporttieren: &cTeleportieren
 
 #Enchantment Id's
 #Armour
