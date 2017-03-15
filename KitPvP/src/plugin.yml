@@ -1,0 +1,19 @@
+name: KitPvP
+version: 0.1
+author: FutureGraphics
+description: CopyRight (C) FutureGraphics 2017
+main: future.graphics.main.main
+commands:
+  kit:
+    usage: /kit
+    description: Oefnet das Kit Inventar
+    alias: [kits]
+  kitpvp:
+    usage: /kit [reload]
+    description: Reloaded die Configurations Datei
+  shop:
+    usage: /shop
+    description: Oeffnet das Shop Inventar
+  setteleport:
+    usage: /setteleport
+    description: Setzt den Spawn von dem Teleporter kit
