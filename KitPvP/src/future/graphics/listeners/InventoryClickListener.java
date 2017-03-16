@@ -1,16 +1,13 @@
 package future.graphics.listeners;
 
-import java.util.List;
-
-import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import essentials.future.code.ConfigManager.ApiManager;
 import essentials.future.code.mysql.MySQLPlayer;
 import future.graphics.main.main;
 
@@ -24,7 +21,7 @@ public class InventoryClickListener implements Listener {
 
 	}
 
-	@SuppressWarnings({ "deprecation" })
+	@SuppressWarnings({ })
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent e) {
 		Player player = (Player) e.getWhoClicked();
@@ -57,37 +54,33 @@ public class InventoryClickListener implements Listener {
 					String kitName = plugin.getConfigManager().getKitNameByDisplayName(
 							e.getCurrentItem().getItemMeta().getDisplayName().replace("§", "&"));
 					if (kitName != null) {
-						player.getInventory().clear();
-						player.getInventory().setHelmet(null);
-						player.getInventory().setChestplate(null);
-						player.getInventory().setLeggings(null);
-						player.getInventory().setBoots(null);
-						int kitcount = plugin.getConfigManager().getKitItemList(kitName);
-						int count = 1;
-						int i = 1;
-						do {
-							List<?> array = plugin.getConfigManager().getKitItems(kitName, i);
-								Material material = Material.getMaterial(array.get(0).toString());
-								String name = array.get(1).toString();
-								name = name.replace("&", "§");
-								int Amount = Integer.parseInt(array.get(2).toString());
-								int under = Integer.parseInt(array.get(3).toString());
-								Enchantment enchantment = Enchantment.getById(Integer.parseInt(array.get(4).toString()));
-								int lvl = Integer.parseInt(array.get(5).toString());
-								String lore = array.get(6).toString();
-								lore = lore.replace("&", "§");
-								ItemStack itemInv = plugin.getApiManager().createItem(material, name, Amount, under,
-										enchantment, lvl, lore);
-								player.getInventory().addItem(itemInv);
-								i++;
-								count++;
-						} while (count < kitcount);
+						ApiManager.clearAllFromPlayer(player);
+						for(String format : plugin.getConfigManager().getKitItems(kitName)) {
+							ItemStack item = plugin.getConfigManager().getItemStack(format);
+							if(ApiManager.isArmor(item.getType())) {
+								if(ApiManager.isHelment(item.getType())) {
+									player.getInventory().setHelmet(item);
+								} else if(ApiManager.isChestplate(item.getType())) {
+									player.getInventory().setChestplate(item);
+								} else if(ApiManager.isLeggins(item.getType())) {
+									player.getInventory().setLeggings(item);
+								} else if(ApiManager.isBoot(item.getType())) {
+									player.getInventory().setBoots(item);
+								}
+							} else {
+								player.getInventory().addItem(item);
+							}
+						}
+						
 						player.sendMessage(plugin.prefix + "§eDu hast das §c"
 								+ plugin.getConfigManager().getKitDisplayName(kitName).replace("&", "§")
 								+ " §eKit bekommen");
 						player.playSound(player.getLocation(), Sound.ITEM_PICKUP, 1f, 1f);
+						if(plugin.kitMap.containsKey(player)) {
+							plugin.kitMap.remove(player);
+						}
+						plugin.kitMap.put(player, kitName);
 						player.closeInventory();
-
 					}
 				}
 			}

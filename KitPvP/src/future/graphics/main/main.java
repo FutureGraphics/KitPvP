@@ -1,5 +1,8 @@
 package future.graphics.main;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,6 +25,7 @@ public class main extends JavaPlugin {
 	public String noAccess = prefix + "§cKeine Berechtigung!";
 	public String playerNotFound = prefix + "§cSpieler nicht gefunden";
 	public String noConsole = prefix + "§cDie Console kann diesen Command nicht ausführen!";
+	public Map<Player, String> kitMap = new HashMap<Player, String>();
 	
 	private ConfigManager configManager;
 	private ApiManager apiManager;

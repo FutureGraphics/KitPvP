@@ -10,7 +10,9 @@ import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import future.graphics.main.main;
 
@@ -34,12 +36,14 @@ public class ConfigManager {
 			config.addDefault("DeathMessage", "&c%killer% &4hatt &c%spieler% &4getötet");
 			// [Material], [Namen], [Anzahl], [UnterKategorie], [Enchantment],
 			// [EnchantLvL], [Lore]
-			String[] arrayString = { "IRON_SWORD", "&eStart-Schwert", "1", "0", "16", "1", "&eStart-Schwert" };
-			config.addDefault("Kit.Start.DisplayName", "&eIchBinGeil");
-			config.addDefault("Kit.Start.Cost", 1);
-			config.addDefault("Kit.Start.Icon", Material.LEATHER_BOOTS.toString());
-			config.addDefault("Kit.Start.Items.1", arrayString);
-			config.addDefault("Kit.Start.ItemList", 1);
+			List<String> defaultKit = new ArrayList<String>();
+			defaultKit.add("1:2, amount:1 , name:&1Standert-Stein, lore:&8Ich;Bin;eine;Lore , enchant:16, enchantLvL:1");
+			
+			config.addDefault("Kit.Start.Cost", 0);
+			config.addDefault("Kit.Start.Icon", Material.IRON_SWORD.name());
+			config.addDefault("Kit.Start.DisplayName", "&eStart-Kit");
+			config.addDefault("Kit.Start.Items", defaultKit);
+			
 			List<String> kitlist = new ArrayList<String>();
 			kitlist.add("Start");
 			config.addDefault("KitList", kitlist);
@@ -115,16 +119,56 @@ public class ConfigManager {
 		return loc;
 	}
 
+	@SuppressWarnings("deprecation")
+	public ItemStack getItemStack(String format) {
+		format = format.replace(" ", "");
+		String[] MainA = format.split(",");
+		ItemStack item = null;
+		
+		String[] amountS = MainA[1].split(":");
+		
+		int amount = Integer.parseInt(amountS[1]);
+		
+		if(MainA[0].contains(":")) {
+			String[] MainB = MainA[0].split(":");
+			item = new ItemStack(Material.getMaterial(Integer.parseInt(MainB[0])), amount, (short) Integer.parseInt(MainB[1]));
+		} else {
+			item = new ItemStack(Material.getMaterial(Integer.parseInt(MainA[0])), amount);
+		}
+		
+		String[] nameS = MainA[2].split(":");
+		
+		String[] enchantS = MainA[4].split(":");
+		String[] enchantLvLS = MainA[5].split(":");
+		
+		ItemMeta meta = item.getItemMeta();
+		meta.setDisplayName(nameS[1]);
+		
+		if(Integer.parseInt(enchantS[1]) != 0) {
+			meta.addEnchant(Enchantment.getById(Integer.parseInt(enchantS[1])), Integer.parseInt(enchantLvLS[1]), true);
+		}
+		
+		List<String> loreList = new ArrayList<>();
+		
+		String[] loreSSplitet = MainA[3].split(":");
+		
+		String[] loreS = loreSSplitet[1].split(";");
+		for(String loretext : loreS) {
+			loreList.add(loretext);
+		}
+		meta.setLore(loreList);
+		
+		item.setItemMeta(meta);
+		
+		return item;
+	}
+	
 	public int getKitItemList(String name) {
 		return config.getInt("Kit." + name + ".ItemList");
 	}
 
-	public String[] test() {
-		return new String[] { "Hello" };
-	}
-
-	public List<?> getKitItems(String name, Integer item) {
-		return config.getList("Kit." + name + ".Items." + item.toString());
+	public List<String> getKitItems(String name) {
+		return config.getStringList("Kit." + name + ".Items");
 	}
 
 	public String getKitIcon(String name) {
@@ -137,15 +181,6 @@ public class ConfigManager {
 
 	public String getKitDisplayName(String name) {
 		return config.getString("Kit." + name + ".DisplayName");
-	}
-
-	public String getDeathMessage(Player player, Player killer) {
-		String deathmessage = config.getString("DeathMessage");
-		return deathmessage;
-	}
-
-	public Boolean isDeathMessageOn() {
-		return config.getBoolean("PublicDeathMessage");
 	}
 	
 	public List<String> getAllKits() {

@@ -1,8 +1,10 @@
 package future.graphics.listeners;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
@@ -51,7 +53,7 @@ public class Funktionen implements Listener {
 	public List<Player> unsichtbar = new ArrayList<Player>();
 	public List<Player> teleportieren = new ArrayList<Player>();
 	public List<Player> freezz = new ArrayList<Player>();
-	public List<Player> freezlist = new ArrayList<Player>();
+	public Map<Player, Location> freezMap = new HashMap<Player, Location>();
 
 	@SuppressWarnings("deprecation")
 	@EventHandler
@@ -265,14 +267,15 @@ public class Funktionen implements Listener {
 							for (final Player players : Bukkit.getOnlinePlayers()) {
 								if (players.getLocation().distance(player.getLocation()) <= 5) {
 									if (!players.getName().equals(player.getName())) {
-										if (!freezlist.contains(players)) {
-											freezlist.add(players);
+										if (!freezMap.containsKey(players)) {
+											freezMap.put(players, players.getLocation());
 											player.sendMessage(plugin.prefix + "§eDu hast §b" + players.getName() + " §eeingefrohren");
 											players.sendMessage(plugin.prefix + "§cDu bist für §c2 §eSekunden eingefrohren");
+											players.setAllowFlight(true);
 											Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 												@Override
 												public void run() {
-													freezlist.remove(players);
+													freezMap.remove(players);
 													players.sendMessage(plugin.prefix + "§eDu bist nicht mehr eingefroren");
 												}
 											}, 20 * 2);
@@ -298,8 +301,8 @@ public class Funktionen implements Listener {
 	@EventHandler
 	public void playerMove(PlayerMoveEvent e) {
 		Player player = e.getPlayer();
-		if (freezlist.contains(player)) {
-			e.setCancelled(true);
+		if (freezMap.containsKey(player)) {
+			player.teleport(freezMap.get(player));
 		}
 	}
 
